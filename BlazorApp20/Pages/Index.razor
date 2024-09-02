@@ -1,0 +1,26 @@
+﻿@page "/"
+@using System.Net.Http.Json
+@using BlazorApp20.Models
+@inject HttpClient Http
+
+<h3>Weather Data</h3>
+
+@if (weatherData != null)
+{
+    <p>Temperature: @weatherData.Main.Temp &deg;C</p>
+    <p>Description: @weatherData.Weather[0].Description</p>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private WeatherData weatherData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string apiUrl = "";
+        weatherData = await Http.GetFromJsonAsync<WeatherData>(apiUrl);
+    }
+}
